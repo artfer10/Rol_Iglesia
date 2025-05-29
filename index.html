@@ -114,17 +114,17 @@
     const programacion = [
       // Junio 2025
       //Domingo
-      { dia: "2025-06-01", predicador: "Britny", aseo: null, canto: "Grupo A", escuela_sabatica: null, jovenes: null },
-      { dia: "2025-06-08", predicador: "Esaú", aseo: null, canto: null, escuela_sabatica: null, jovenes: "Carlos" },
-      { dia: "2025-06-15", predicador: "Said", aseo: null, canto: "Grupo C", escuela_sabatica: null, jovenes: null },
-      { dia: "2025-06-22", predicador: "Karen", aseo: null, canto: "Grupo E", escuela_sabatica: "Clase 6", jovenes: null },
-      { dia: "2025-06-29", predicador: "Mario Reyes", aseo: null, canto: null, escuela_sabatica: null, jovenes: null },
+      { dia: "2025-06-01", predicador: "Britny", aseo: null, canto_servicio: "Grupo A", escuela_sabatica: null, jovenes: null },
+      { dia: "2025-06-08", predicador: "Esaú", aseo: null, canto_servicio: null, escuela_sabatica: null, jovenes: "Carlos" },
+      { dia: "2025-06-15", predicador: "Said", aseo: null, canto_servicio: "Grupo C", escuela_sabatica: null, jovenes: null },
+      { dia: "2025-06-22", predicador: "Karen", aseo: null, canto_servicio: "Grupo E", escuela_sabatica: "Clase 6", jovenes: null },
+      { dia: "2025-06-29", predicador: "Mario Reyes", aseo: null, canto_servicio: null, escuela_sabatica: null, jovenes: null },
 
       //Miercoles
-      { dia: "2025-06-04", predicador: "Mariangel", aseo: null, canto: "Grupo D", escuela_sabatica: null, jovenes: null },
-      { dia: "2025-06-11", predicador: "Joandri", aseo: null, canto: "Grupo B", escuela_sabatica: null, jovenes: "Líder E" },
-      { dia: "2025-06-18", predicador: "Ronito", aseo: null, canto: "Britny", escuela_sabatica: null, jovenes: null },
-      { dia: "2025-06-25", predicador: "Astrid", aseo: null, canto: "Grupo G", escuela_sabatica: null, jovenes: null },
+      { dia: "2025-06-04", predicador: "Mariangel", aseo: null, canto_servicio: "Grupo D", escuela_sabatica: null, jovenes: null },
+      { dia: "2025-06-11", predicador: "Joandri", aseo: null, canto_servicio: "Grupo B", escuela_sabatica: null, jovenes: "Líder E" },
+      { dia: "2025-06-18", predicador: "Ronito", aseo: null, canto_servicio: "Britny", escuela_sabatica: null, jovenes: null },
+      { dia: "2025-06-25", predicador: "Astrid", aseo: null, canto_servicio: "Grupo G", escuela_sabatica: null, jovenes: null },
       
       //Viernes
       { dia: "2025-06-06", jovenes: "Dalila" },
@@ -133,10 +133,10 @@
       { dia: "2025-06-27", jovenes: "Nimian, Margareth y Jorge" },
       
       //Sabado
-      { dia: "2025-06-07", predicador: "Rosita", canto: "Rudy", escuela_sabatica: "Mayra" },
-      { dia: "2025-06-14", predicador: "Delmer", canto: "Juana", escuela_sabatica: "Halbin" },
-      { dia: "2025-06-21", predicador: "Nimian", canto: "Joandri", escuela_sabatica: "Maylin" },
-      { dia: "2025-06-28", predicador: "Halbin", canto: "Delmer", escuela_sabatica: "Karen" }
+      { dia: "2025-06-07", predicador: "Rosita", canto_servicio: "Rudy", escuela_sabatica: "Mayra" },
+      { dia: "2025-06-14", predicador: "Delmer", canto_servicio: "Juana", escuela_sabatica: "Halbin" },
+      { dia: "2025-06-21", predicador: "Nimian", canto_servicio: "Joandri", escuela_sabatica: "Maylin" },
+      { dia: "2025-06-28", predicador: "Halbin", canto_servicio: "Delmer", escuela_sabatica: "Karen" }
     ];
 
     const familiasAseo = ["Flores", "Mendoza", "Nuñez", "Fonseca"];
@@ -203,7 +203,7 @@
           let detalle = `<strong>Predicador:</strong> ${event.predicador}<br>`;
           const claves = {
             aseo: 'Aseo',
-            canto: 'Canto',
+            canto_servicio: 'Servicio Canto',
             escuela_sabatica: 'Escuela Sabática',
             jovenes: 'Jóvenes'
           }
@@ -290,7 +290,7 @@
           diaEvento >= hoy && (
             (ev.predicador && ev.predicador.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").includes(nombre)) ||
             (ev.aseo && ev.aseo.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").includes(nombre)) ||
-            (ev.canto && ev.canto.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").includes(nombre)) ||
+            (ev.canto_servicio && ev.canto_servicio.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").includes(nombre)) ||
             (ev.escuela_sabatica && ev.escuela_sabatica.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").includes(nombre)) ||
             (ev.jovenes && ev.jovenes.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").includes(nombre))
           )
@@ -301,11 +301,11 @@
       if (coincidencias.length > 0) {
         // Define los roles y sus colores/íconos
         const roles = [
-          { clave: "predicador", color: "#007bff", icono: "🟦", nombre: "Predicador" },
-          { clave: "aseo", color: "#28a745", icono: "🧹", nombre: "Aseo" },
-          { clave: "canto", color: "#ffc107", icono: "🟨", nombre: "Canto" },
-          { clave: "escuela_sabatica", color: "#17a2b8", icono: "📘", nombre: "Escuela Sabática" },
-          { clave: "jovenes", color: "#dc3545", icono: "🟥", nombre: "Jóvenes" }
+          { clave: "predicador", color: "#007bff", nombre: "Predicador" },
+          { clave: "aseo", color: "#28a745", nombre: "Aseo" },
+          { clave: "canto_servicio", color: "#ffc107", nombre: "Servicio Canto" },
+          { clave: "escuela_sabatica", color: "#17a2b8", nombre: "Escuela Sabática" },
+          { clave: "jovenes", color: "#dc3545", nombre: "Jóvenes" }
         ];
 
         // Agrupa las fechas por rol
@@ -354,7 +354,7 @@
       const coincidencias = programacion.filter(ev =>
         (ev.predicador && ev.predicador.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").includes(nombre)) ||
         (ev.aseo && ev.aseo.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").includes(nombre)) ||
-        (ev.canto && ev.canto.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").includes(nombre)) ||
+        (ev.canto_servicio && ev.canto_servicio.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").includes(nombre)) ||
         (ev.escuela_sabatica && ev.escuela_sabatica.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").includes(nombre)) ||
         (ev.jovenes && ev.jovenes.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").includes(nombre))
       );
@@ -363,7 +363,7 @@
         let rol = "";
         if (ev.predicador && ev.predicador.toLowerCase().includes(nombre)) rol = `Predicador: ${ev.predicador}`;
         if (ev.aseo && ev.aseo.toLowerCase().includes(nombre)) rol = `Aseo: ${ev.aseo}`;
-        if (ev.canto && ev.canto.toLowerCase().includes(nombre)) rol = `Canto: ${ev.canto}`;
+        if (ev.canto_servicio && ev.canto_servicio.toLowerCase().includes(nombre)) rol = `Servicio Canto: ${ev.canto_servicio}`;
         if (ev.escuela_sabatica && ev.escuela_sabatica.toLowerCase().includes(nombre)) rol = `Escuela Sabática: ${ev.escuela_sabatica}`;
         if (ev.jovenes && ev.jovenes.toLowerCase().includes(nombre)) rol = `Jóvenes: ${ev.jovenes}`;
         const fecha = ev.dia.replace(/-/g, "");
