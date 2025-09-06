@@ -7,7 +7,7 @@
   <title>Calendario Iglesia</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.css" rel="stylesheet">
-  <!--Estilo-->
+
   <style>
     body {
       font-family: 'Segoe UI', sans-serif;
@@ -57,6 +57,32 @@
       border-radius: 50%;
     }
 
+    #cinta-motivacional {
+      width: 100%;
+      overflow: hidden;
+      white-space: nowrap;
+      background: linear-gradient(90deg, #b3d8ff 0%, #6ec6ff 50%, #2196f3 100%);
+      color: #fff;
+      font-size: 1rem;
+      font-weight: bold;
+      border-radius: 0;
+      padding: 4px 0;
+      height: 2.2em;
+      box-shadow: 0 2px 8px rgba(33,150,243,0.08);
+      margin-bottom: 1rem;
+      margin-top: 0.5rem;
+      position: static; 
+    }
+    #cinta-motivacional span {
+      display: inline-block;
+      padding-left: 100%;
+      animation: mover-cinta 18s linear infinite;
+    }
+    @keyframes mover-cinta {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-100%); }
+    }
+
     @media (max-width: 500px) {
       .fc-event-title {
         white-space: normal;
@@ -78,6 +104,9 @@
 <body>
   <div class="container mb-4 text-center">
     <h2 class="fw-bold">Rol Iglesia Adventista Jutiapa Centro</h2>
+    <div id="cinta-motivacional">
+      <span></span>
+    </div>
     <div class="input-group mt-3">
       <input type="text" id="nombre" class="form-control" maxlength="200" placeholder="Buscar participante">
       <button class="btn btn-primary" onclick="buscarNombre()">Buscar</button>
@@ -135,23 +164,45 @@
       { dia: "2025-09-20", predicador: "Delmer", canto: "Rosita", escuela_sabatica: "No asignado" },
       { dia: "2025-09-27", predicador: "Britny", canto: "Rudy", escuela_sabatica: "No asignado" },
 
-      
+      // Octubre 2025
+      // Domingos
+      { dia: "2025-10-05" },
+      { dia: "2025-10-12" },
+      { dia: "2025-10-19" },
+      { dia: "2025-10-26" },
 
+      // Miércoles
+      { dia: "2025-10-01", aseo: "Luisa - Natividad" },
+      { dia: "2025-10-08" },
+      { dia: "2025-10-15" },
+      { dia: "2025-10-22" },
+      { dia: "2025-10-29" },
+
+      // Viernes
+      { dia: "2025-10-03", aseo: "Luisa - Natividad" },
+      { dia: "2025-10-10" },
+      { dia: "2025-10-17" },
+      { dia: "2025-10-24" },
+      { dia: "2025-10-31" },
+      // Sábados
+      { dia: "2025-10-04" },
+      { dia: "2025-10-11" },
+      { dia: "2025-10-18" },
+      { dia: "2025-10-25" }
     ];
 
     const colorPorFamilia = {
       "Nimian": "#ffc107",
-      "Mario - Lidia": "#007bff",
+      "Mario - Lidia": "#90caf9",
       "Dalila - Karen": "#FF8904",
       "Luisa - Natividad": "#28a745",
-      "Flores Solorzano": "#dc3545",
+      "Maylin - Belkis": "#dc3545",
       
     };
 
-    // Semana del mes empezando en domingo
     function getWeekOfMonth(date) {
       const firstDay = new Date(date.getFullYear(), date.getMonth(), 1);
-      const firstDayWeekDay = firstDay.getDay(); // 0=domingo
+      const firstDayWeekDay = firstDay.getDay(); // domingo
       const day = date.getDate();
       return Math.floor((day + firstDayWeekDay - 1) / 7);
     }
@@ -176,7 +227,6 @@
         dayCellDidMount: function (info) {
           const fecha = new Date(info.date);
           const fechaStr = fecha.toISOString().slice(0, 10);
-          // Busca si hay evento de aseo para ese día
           const evento = programacion.find(ev => ev.dia === fechaStr && ev.aseo);
           if (evento && evento.aseo) {
             const color = colorPorFamilia[evento.aseo] || '#bbb';
@@ -203,29 +253,27 @@
 
           let detalle = "";
 
-          // Sábado: Canto, Escuela Sabática
           if (fecha.getDay() === 6) { // Sábado
             if (event.canto) detalle += `<strong>Canto:</strong> ${event.canto}<br>`;
             if (event.escuela_sabatica) detalle += `<strong>Escuela Sabática:</strong> ${event.escuela_sabatica}<br>`;
             if (event.predicador) detalle += `<strong>Predicador:</strong> ${event.predicador}<br>`;
             if (event.aseo) detalle += `<div class="mt-2"><strong>Aseo:</strong> ${event.aseo}</div>`;
           }
-          // Viernes: Jóvenes y Aseo
+
           else if (fecha.getDay() === 5) { // Viernes
             if (event.jovenes) detalle += `<strong>Sociedad de Jóvenes:</strong> ${event.jovenes}<br>`;
             if (event.aseo) detalle += `<div class="mt-2"><strong>Aseo:</strong> ${event.aseo}</div>`;
           }
-          // Miércoles: Canto, Predicador, Aseo
+
           else if (fecha.getDay() === 3) { // Miércoles
             if (event.canto) detalle += `<strong>Canto:</strong> ${event.canto}<br>`;
             if (event.predicador) detalle += `<strong>Predicador:</strong> ${event.predicador}<br>`;
             if (event.aseo) detalle += `<div class="mt-2"><strong>Aseo:</strong> ${event.aseo}</div>`;
           }
-          // Domingo y otros días: Predicador, Aseo, Canto
           else {
+            if (event.canto) detalle += `<strong>Canto:</strong> ${event.canto}<br>`;
             if (event.predicador) detalle += `<strong>Predicador:</strong> ${event.predicador}<br>`;
             if (event.aseo) detalle += `<div class="mt-2"><strong>Aseo:</strong> ${event.aseo}</div>`;
-            if (event.canto) detalle += `<strong>Canto:</strong> ${event.canto}<br>`;
           }
 
           document.getElementById('modal-body').innerHTML = detalle;
@@ -265,10 +313,8 @@
         }
       });
 
-      // Ordenar por fecha del evento
       familiasMes.sort((a, b) => a.fecha - b.fecha);
 
-      // Quitar duplicados manteniendo el primero que aparece
       const familiasUnicas = [];
       const vistos = new Set();
       familiasMes.forEach(item => {
@@ -330,7 +376,6 @@
    
 
       if (coincidencias.length > 0) {
-        // Define los roles y sus colores/íconos
         const roles = [
           { clave: "predicador", color: "#007bff", icono: "🟦", nombre: "Predicador" },
           { clave: "aseo", color: "#28a745", icono: "🧹", nombre: "Aseo" },
@@ -339,7 +384,6 @@
           { clave: "jovenes", color: "#dc3545", icono: "🟥", nombre: "Jóvenes" }
         ];
 
-        // Agrupa las fechas por rol
         let fechasPorRol = {};
         roles.forEach(rol => fechasPorRol[rol.clave] = []);
 
@@ -354,7 +398,6 @@
           });
         });
 
-        // Construye el contenido agrupado SIN iconos
         let contenido = "";
         roles.forEach(rol => {
           if (fechasPorRol[rol.clave].length > 0) {
@@ -365,7 +408,6 @@
           }
         });
 
-        // Botón para descargar .ics
         contenido += `<div class="d-flex justify-content-center mt-2">
           <button onclick="descargarICS('${nombre}')" class="btn btn-success btn-sm">Agregar a mi calendario</button>
         </div>`;
@@ -380,7 +422,6 @@
       new bootstrap.Modal(document.getElementById('infoModal')).show();
     }
 
-    // Genera y descarga un archivo .ics con todas las asignaciones encontradas
     function descargarICS(nombre) {
       const coincidencias = programacion.filter(ev =>
         (ev.predicador && ev.predicador.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").includes(nombre)) ||
@@ -410,8 +451,26 @@
       document.body.removeChild(link);
     }
 
-  </script>
-</body>
+    const versiculos = [
+      "Todo lo puedo en Cristo que me fortalece. (Filipenses 4:13)",
+      "Servid al Señor con alegría; venid ante su presencia con regocijo. (Salmo 100:2)",
+      "No nos cansemos, pues, de hacer bien; porque a su tiempo segaremos, si no desmayamos. (Gálatas 6:9)",
+      "Y todo lo que hagáis, hacedlo de corazón, como para el Señor y no para los hombres. (Colosenses 3:23)",
+      "El Señor es mi luz y mi salvación; ¿de quién temeré? (Salmo 27:1)",
+      "Jehová cumplirá su propósito en mí. (Salmo 138:8)",
+      "Confía en Jehová con todo tu corazón, y no te apoyes en tu propia prudencia. (Proverbios 3:5)",
+      "Porque Dios no nos ha dado espíritu de cobardía, sino de poder, de amor y de dominio propio. (2 Timoteo 1:7)"
+    ];
 
+    document.addEventListener('DOMContentLoaded', function () {
+      const cinta = document.querySelector('#cinta-motivacional span');
+      cinta.innerText = versiculos[Math.floor(Math.random() * versiculos.length)];
+    });
+  </script>
+</body></body>
+
+
+
+</html>
 </html>
 
